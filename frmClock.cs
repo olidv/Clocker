@@ -89,13 +89,13 @@ namespace Digital_Clock
         /*** SERVICO DE MONITORAMENTO DOS APLICATIVOS ***/
 
         /*** COTACOES DO FOREX INTERROMPIDAS PARA MEDIR CHECK DA PERFORMANCE DAS COTACOES DE MINI CONTRATOS ***/
-        //static readonly String MT5_XM = @"C:\Apps\B3\XM Global MT5\terminal64.exe";
-        static readonly String MT5_CLEAR = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
+        static readonly String MT5_XM = @"C:\Apps\B3\XM Global MT5\terminal64.exe";
+        static readonly String MT5_GENIAL = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
         static readonly String MT5_MODAL = @"C:\Apps\B3\ModalMais MetaTrader 5\terminal64.exe";
         // TODO static readonly String TRYD_MODAL = @"C:\Apps\B3\Tryd6\trader.exe";
 
-        //static readonly (int dia, int mes)[] FERIADOS_FOREX = {( 1, 1),  // Ano Novo: Confraternizacao Universal
-        //                                                       (25,12)}; // Natal
+        static readonly (int dia, int mes)[] FERIADOS_FOREX = {( 1, 1),  // Ano Novo: Confraternizacao Universal
+                                                               (25,12)}; // Natal
         /*** FERIADOS ANTECIPADOS 2021 e 2022 ***/
         static readonly (int dia, int mes)[] FERIADOS_BR_B3 = {( 1, 1),  // Ano Novo: Confraternizacao Universal
                                                                //(25, 1),  // Aniversario de Sao Paulo (SP)
@@ -117,35 +117,38 @@ namespace Digital_Clock
 
         public void checkScheduler()
         {
-            bool isMT5ClearOn = false,
-                 isMT5ModalOn = false;
+            bool isMT5GenialOn = false;
+            Process procMT5Genial = null;
+
+            bool isMT5ModalOn = false;
+            Process procMT5Modal = null;
+
             //bool isTrydModalOn = false;
-            //bool isMT5XmOn = false;
-            Process procMT5Clear = null,
-                    procMT5Modal = null;
             //Process procTrydModal = null;
-            //Process procMT5Xm = null;
+
+            bool isMT5XmOn = false;
+            Process procMT5Xm = null;
 
             // busca o estado das instancias do MetaTrader (corretoras) em execucao:
             Process[] processes = Process.GetProcessesByName("terminal64");
             foreach (Process proc in processes)
             {
                 String title = proc.MainWindowTitle.ToUpper();
-                if (title.Contains("CLEAR"))
+                if (title.Contains("GENIAL"))
                 {
-                    procMT5Clear = proc;
-                    isMT5ClearOn = true;
+                    procMT5Genial = proc;
+                    isMT5GenialOn = true;
                 }
                 if (title.Contains("MODALMAIS"))
                 {
                     procMT5Modal = proc;
                     isMT5ModalOn = true;
                 }
-                //if (title.Contains("XM"))
-                //{
-                //    procMT5Xm = proc;
-                //    isMT5XmOn = true;
-                //}
+                if (title.Contains("XM"))
+                {
+                    procMT5Xm = proc;
+                    isMT5XmOn = true;
+                }
             }
 
             // busca o estado das instancias do Tryd (modalmais) em execucao:
@@ -163,8 +166,8 @@ namespace Digital_Clock
             // identifica o dia corrente para verificar os mercados:
             bool isB3Open = false,
                  isFeriadoB3 = false;
-            //bool isForexOpen = false,
-            //     isFeriadoForex = false;
+            bool isForexOpen = false,
+                 isFeriadoForex = false;
             DateTime now = DateTime.Now;
             int dia = now.Day,
                 mes = now.Month,
@@ -173,13 +176,13 @@ namespace Digital_Clock
             DayOfWeek dow = now.DayOfWeek;
 
             // verifica se o dia corrente eh feriado no mercado forex e no mercado b3:
-            //foreach ((int dia, int mes) feriado in FERIADOS_FOREX)
-            //{
-            //    if (dia == feriado.dia && mes == feriado.mes)
-            //    {
-            //        isFeriadoForex = true;
-            //    }
-            //}
+            foreach ((int dia, int mes) feriado in FERIADOS_FOREX)
+            {
+                if (dia == feriado.dia && mes == feriado.mes)
+                {
+                    isFeriadoForex = true;
+                }
+            }
             foreach ((int dia, int mes) feriado in FERIADOS_BR_B3)
             {
                 if (dia == feriado.dia && mes == feriado.mes)
@@ -192,41 +195,41 @@ namespace Digital_Clock
             switch (dow)
             {
                 case DayOfWeek.Monday:
-                    //isForexOpen = !isFeriadoForex; // && (hor < 21);
+                    isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
                     break;
                 case DayOfWeek.Tuesday:
-                    //isForexOpen = !isFeriadoForex; // && (hor < 21);
+                    isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
                     break;
                 case DayOfWeek.Wednesday:
-                    //isForexOpen = !isFeriadoForex; // && (hor < 21);
+                    isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
                     break;
                 case DayOfWeek.Thursday:
-                    //isForexOpen = !isFeriadoForex; // && (hor < 21);
+                    isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
                     break;
                 case DayOfWeek.Friday:
-                    //isForexOpen = !isFeriadoForex && (hor < 19);
+                    isForexOpen = !isFeriadoForex && (hor < 19);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
                     break;
                 case DayOfWeek.Saturday:
-                    //isForexOpen = false;
+                    isForexOpen = false;
                     isB3Open = false;
                     break;
                 case DayOfWeek.Sunday:
-                    //isForexOpen = !isFeriadoForex && (hor >= 18);
+                    isForexOpen = !isFeriadoForex && (hor >= 18);
                     isB3Open = false;
                     break;
             }
 
-            // ativacao ou suspensao do MT para Clear e ModalMais (B3):
+            // ativacao ou suspensao do MT para Genial e ModalMais (B3):
             if (isB3Open)
             { // Bolsa do brasil aberta, executar MT5 e TRYD se nao estiverem em execucao:
-                if (!isMT5ClearOn)
+                if (!isMT5GenialOn)
                 {
-                    procMT5Clear = openProgram(MT5_CLEAR);
+                    procMT5Genial = openProgram(MT5_GENIAL);
                 }
                 if (!isMT5ModalOn)
                 {
@@ -239,9 +242,9 @@ namespace Digital_Clock
             }
             else
             { // Bolsa do brasil fechada, encerrar MT5 e TRYD se estiverem em execucao (e check-close ativo):
-                if (isMT5ClearOn && ckbClose.Checked)
+                if (isMT5GenialOn && ckbClose.Checked)
                 {
-                    closeProgram(procMT5Clear);
+                    closeProgram(procMT5Genial);
                 }
                 if (isMT5ModalOn && ckbClose.Checked)
                 {
@@ -254,20 +257,20 @@ namespace Digital_Clock
             }
 
             // ativacao ou suspensao do MT para XM (Forex):
-            //if (isForexOpen)
-            //{ // Mercado Forex aberto, executar MT5 se nao estiver em execucao (e check-close ativo):
-            //    if (!isMT5XmOn)
-            //    {
-            //        procMT5Xm = openProgram(MT5_XM);
-            //    }
-            //}
-            //else
-            //{ // Mercado Forex fechado, encerrar MT5 se estiver em execucao:
-            //    if (isMT5XmOn && ckbClose.Checked)
-            //    {
-            //        closeProgram(procMT5Xm);
-            //    }
-            //}
+            if (isForexOpen)
+            { // Mercado Forex aberto, executar MT5 se nao estiver em execucao (e check-close ativo):
+                if (!isMT5XmOn)
+                {
+                    procMT5Xm = openProgram(MT5_XM);
+                }
+            }
+            else
+            { // Mercado Forex fechado, encerrar MT5 se estiver em execucao:
+                if (isMT5XmOn && ckbClose.Checked)
+                {
+                    closeProgram(procMT5Xm);
+                }
+            }
         }
 
         private static Process openProgram(String program)
