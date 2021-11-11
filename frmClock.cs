@@ -93,6 +93,8 @@ namespace Digital_Clock
         static readonly String MT5_GENIAL = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
         static readonly String MT5_MODAL = @"C:\Apps\B3\ModalMais MetaTrader 5\terminal64.exe";
         // TODO static readonly String TRYD_MODAL = @"C:\Apps\B3\Tryd6\trader.exe";
+        static readonly String PYTHON_EXE = @"python.exe";
+        static readonly String SCRIPT_INFINITE = @"C:\Apps\B3\InFiniTe\main.py";
 
         static readonly (int dia, int mes)[] FERIADOS_FOREX = {( 1, 1),  // Ano Novo: Confraternizacao Universal
                                                                (25,12)}; // Natal
@@ -129,6 +131,9 @@ namespace Digital_Clock
             bool isMT5XmOn = false;
             Process procMT5Xm = null;
 
+            bool isPythonOn = false;
+            Process procPython = null;
+
             // busca o estado das instancias do MetaTrader (corretoras) em execucao:
             Process[] processes = Process.GetProcessesByName("terminal64");
             foreach (Process proc in processes)
@@ -158,16 +163,26 @@ namespace Digital_Clock
             //    String title = proc.MainWindowTitle.ToUpper();
             //    if (title.Contains("TRYD"))
             //    {
-            //        procTrydModal = proc;
+            //        procPython = proc;
             //        isTrydModalOn = true;
             //    }
             //}
+
+
+            // busca o estado das instancias do Python (scripts) em execucao:
+            processes = Process.GetProcessesByName("python");
+            if (processes.Any())
+            { // referencia o primeiro script python em execucao:
+                procPython = processes[0];
+                isPythonOn = true;
+            }
 
             // identifica o dia corrente para verificar os mercados:
             bool isB3Open = false,
                  isFeriadoB3 = false;
             bool isForexOpen = false,
                  isFeriadoForex = false;
+            bool isInfiniteOk = false;
             DateTime now = DateTime.Now;
             int dia = now.Day,
                 mes = now.Month,
@@ -196,31 +211,38 @@ namespace Digital_Clock
             {
                 case DayOfWeek.Monday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 9);
                     break;
                 case DayOfWeek.Tuesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 9);
                     break;
                 case DayOfWeek.Wednesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 9);
                     break;
                 case DayOfWeek.Thursday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 9);
                     break;
                 case DayOfWeek.Friday:
                     isForexOpen = !isFeriadoForex && (hor < 19);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 30));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 9);
                     break;
                 case DayOfWeek.Saturday:
                     isForexOpen = false;
                     isB3Open = false;
+                    isInfiniteOk = (hor >= 0 && hor <= 12);
                     break;
                 case DayOfWeek.Sunday:
                     isForexOpen = !isFeriadoForex && (hor >= 18);
                     isB3Open = false;
+                    isInfiniteOk = (hor >= 0 && hor <= 12);
                     break;
             }
 
@@ -271,6 +293,23 @@ namespace Digital_Clock
                     closeProgram(procMT5Xm);
                 }
             }
+
+            // ativacao ou suspensao do Infinite em Python (scripts):
+            if (isInfiniteOk)
+            { // Mercados estao fechados, pode executar scripts python de manutencao se ja nao estiverem executando:
+                if (!isPythonOn)
+                {
+                    procPython = openPython(SCRIPT_INFINITE);
+                }
+            }
+            else
+            { // Mercados estao abertos, evita executar os scripts de manutencao
+              // para nao sobrecarregar o computador e consumir muitos recursos:
+                if (isPythonOn && ckbClose.Checked)
+                {
+                    closeProgram(procPython);
+                }
+            }
         }
 
         private static Process openProgram(String program)
@@ -311,5 +350,28 @@ namespace Digital_Clock
 
             return result;
         }
+
+        private static Process openPython(String script)
+        {
+            Process proc = null;
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = PYTHON_EXE;
+                psi.Arguments = $"\"{script}\"";
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = false;
+                psi.WindowStyle = ProcessWindowStyle.Minimized;
+
+                proc = Process.Start(psi);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return proc;
+        }
+
     }
 }
