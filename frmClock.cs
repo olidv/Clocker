@@ -168,7 +168,6 @@ namespace Digital_Clock
             //    }
             //}
 
-
             // busca o estado das instancias do Python (scripts) em execucao:
             processes = Process.GetProcessesByName("python");
             if (processes.Any())
@@ -372,6 +371,5 @@ namespace Digital_Clock
 
             return proc;
         }
-
     }
 }
