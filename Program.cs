@@ -5,17 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using NLog;
 
 namespace Digital_Clock
 {
     static class Program
     {
+        // referencia ao logger do NLog para toda a classe...
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            logger.Info("Iniciando aplicacao Clock.exe...");
+
             // captura evento do sistema para identificar retorno (resume) da hibernacao/suspensao do computador:
             SystemEvents.PowerModeChanged += OnPowerModeChange;
 
@@ -25,6 +31,8 @@ namespace Digital_Clock
             // Carga da aplicacao e apresentacao da tela inicial:
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            logger.Trace("Abrindo tela principal do Clock.exe...");
             Application.Run(new frmClock());
         }
 
@@ -33,6 +41,7 @@ namespace Digital_Clock
             // efetua nova sincronizacao do relogio do sistema ao retornar da hibernacao/suspensao:
             if (e.Mode == PowerModes.Resume)
             {
+                logger.Trace("Reativando programa Clock apos suspensao...");
                 ResyncSystemTime();
             }
         }
@@ -43,6 +52,8 @@ namespace Digital_Clock
         {
             try
             {
+                logger.Trace("Acertando a hora do computador...");
+
                 // configura a sincronizacao do relogio do computador para "time.windows.com":
                 ProcessStartInfo startInfoConfig = new ProcessStartInfo(W32TM);
                 startInfoConfig.WindowStyle = ProcessWindowStyle.Hidden;
@@ -67,7 +78,7 @@ namespace Digital_Clock
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Exception caught.", e);
+                logger.Error("Erro ao tentar acertar a hora do computador: {}", e.Message);
             }
         }
     }

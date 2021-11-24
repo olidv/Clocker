@@ -10,11 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NLog;
 
 namespace Digital_Clock
 {
     public partial class frmClock : Form
     {
+        // referencia ao logger do NLog para toda a classe...
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public frmClock()
         {
             InitializeComponent();
@@ -101,21 +105,23 @@ namespace Digital_Clock
         /*** FERIADOS ANTECIPADOS 2021 e 2022 ***/
         static readonly (int dia, int mes)[] FERIADOS_BR_B3 = {( 1, 1),  // Ano Novo: Confraternizacao Universal
                                                                //(25, 1),  // Aniversario de Sao Paulo (SP)
-                                                               (24, 2),  // Carnaval
-                                                               (25, 2),  // Carnaval
-                                                               (10, 4),  // Paixao de Cristo
+                                                               (28, 2),  // Carnaval
+                                                               ( 1, 3),  // Carnaval
+                                                               //( 2, 3),  // Quarta-feira de Cinzas: Inicio as 13h
+                                                               (15, 4),  // Paixao de Cristo
                                                                (21, 4),  // Tiradentes
                                                                ( 1, 5),  // Dia do Trabalho
-                                                               //(11, 6),  // Corpus Christi
-                                                               (09, 7),  // Revolucao Constitucionalista (SP)
-                                                               ( 7, 9),  // Dia da Independencia do Brasil
+                                                               (16, 6),  // Corpus Christi
+                                                               //( 9, 7),  // Revolucao Constitucionalista (SP)
+                                                               ( 7, 9),  // Independencia do Brasil
                                                                (12,10),  // Nossa Senhora Aparecida (Padroeira do Brasil)
                                                                ( 2,11),  // Finados
                                                                (15,11),  // Proclamacao da Republica
                                                                //(20,11),  // Consciencia Negra (SP)
-                                                               (24,12),  // Vespera de Natal
-                                                               (25,12),  // Natal
-                                                               (31,12)}; // Vespera de Ano Novo
+                                                               //(24,12),  // Vespera de Natal: Encerra as 12h
+                                                               (25,12)  // Natal
+                                                               //(30,12) // Vespera de Ano Novo: Encerra as 12h
+                                                              };
 
         public void checkScheduler()
         {
@@ -175,6 +181,7 @@ namespace Digital_Clock
                 procPython = processes[0];
                 isPythonOn = true;
             }
+            logger.Debug("Verificando processos em checkScheduler() | isMT5GenialOn={} | isMT5ModalOn={} | isMT5XmOn={} | isPythonOn={}", isMT5GenialOn, isMT5ModalOn, isMT5XmOn, isPythonOn);
 
             // identifica o dia corrente para verificar os mercados:
             bool isB3Open = false,
@@ -211,27 +218,27 @@ namespace Digital_Clock
                 case DayOfWeek.Monday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 8);
+                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Tuesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 8);
+                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Wednesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 8);
+                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Thursday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 8);
+                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Friday:
                     isForexOpen = !isFeriadoForex && (hor < 19);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 8);
+                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Saturday:
                     isForexOpen = false;
@@ -244,6 +251,7 @@ namespace Digital_Clock
                     isInfiniteOk = (hor >= 0 && hor <= 12);
                     break;
             }
+            logger.Debug("Verificando calendario em checkScheduler() | isFeriadoForex={} | isForexOpen={} | isFeriadoB3={} | isB3Open={} | isInfiniteOk={}", isFeriadoForex, isForexOpen, isFeriadoB3, isB3Open, isInfiniteOk);
 
             // ativacao ou suspensao do MT para Genial e ModalMais (B3):
             if (isB3Open)
@@ -316,13 +324,14 @@ namespace Digital_Clock
             Process proc = null;
             try
             {
+                logger.Debug("Vai executar o programa {}", program);
                 ProcessStartInfo startInfo = new ProcessStartInfo(program);
                 startInfo.WindowStyle = ProcessWindowStyle.Maximized;
 
                 proc = Process.Start(startInfo);
             }
             catch (Exception e) {
-                Console.WriteLine("{0} Exception caught.", e);
+                logger.Error("Erro ao tentar executar programa {} | Erro: {}", program, e.Message);
             }
 
             return proc;
@@ -333,41 +342,53 @@ namespace Digital_Clock
             bool result = false;
             try
             {
+                logger.Debug("Vai encerrar processo {} | Flag HasExited={}", proc.ProcessName, proc.HasExited);
                 if (proc == null || proc.HasExited)
                 {
                     result = true; // indica que o programa foi encerrado (nao importa se foi antes).
                 }
                 else
                 {
+                    // inicialmente apenas fecha a janela principal do programa para encerrar seu processo...
                     result = proc.CloseMainWindow();
+                    if (! result)  // mas se isso nao encerrar o processo, entao envia Kill() diretamente.
+                    {
+                        logger.Debug("Processo {} nao encerrou com CloseMainWindow(). Vai executar Kill()...", proc.ProcessName);
+                        proc.Kill();
+                    }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Exception caught.", e);
+                logger.Error("Erro ao tentar encerrar processo {} | Erro: {}", proc.ProcessName, e.Message);
             }
 
             return result;
         }
 
-        private static Process openBatch(String script)
+        private static Process openBatch(String batch)
         {
             Process proc = null;
             try
             {
-                var psi = new ProcessStartInfo("cmd.exe", "/C " + Path.GetFileName(script));
+                String file_batch = Path.GetFileName(batch);
+                String path_batch = Path.GetDirectoryName(batch);
+                logger.Debug("Vai executar o batch {} no diretorio {}", 
+                             "cmd.exe" + " /C " + file_batch, path_batch);
+
+                var psi = new ProcessStartInfo("cmd.exe", "/C " + file_batch);
                 // utilizar este codigo comentado para esconder a janela do batch executando...
                 //psi.UseShellExecute = false;
                 //psi.CreateNoWindow = true;
                 psi.CreateNoWindow = false;
-                psi.WorkingDirectory = Path.GetDirectoryName(script);
+                psi.WorkingDirectory = path_batch;
                 psi.WindowStyle = ProcessWindowStyle.Minimized;
 
                 proc = Process.Start(psi);
             }
             catch (Exception e)
             {
-                Console.WriteLine("{0} Exception caught.", e);
+                logger.Error("Erro ao tentar executar batch {} | Erro: {}", batch, e.Message);
             }
 
             return proc;
