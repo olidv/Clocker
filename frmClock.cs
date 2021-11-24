@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,8 +94,7 @@ namespace Digital_Clock
         static readonly String MT5_GENIAL = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
         static readonly String MT5_MODAL = @"C:\Apps\B3\ModalMais MetaTrader 5\terminal64.exe";
         // TODO static readonly String TRYD_MODAL = @"C:\Apps\B3\Tryd6\trader.exe";
-        static readonly String PYTHON_EXE = @"python.exe";
-        static readonly String SCRIPT_INFINITE = @"C:\Apps\B3\InFiniTe\main.py";
+        static readonly String PYTHON_INFINITE = @"C:\Apps\B3\InFiniTe\bin\startup.bat";
 
         static readonly (int dia, int mes)[] FERIADOS_FOREX = {( 1, 1),  // Ano Novo: Confraternizacao Universal
                                                                (25,12)}; // Natal
@@ -210,28 +210,28 @@ namespace Digital_Clock
             {
                 case DayOfWeek.Monday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 9);
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 8);
                     break;
                 case DayOfWeek.Tuesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 9);
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 8);
                     break;
                 case DayOfWeek.Wednesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 9);
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 8);
                     break;
                 case DayOfWeek.Thursday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 9);
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 8);
                     break;
                 case DayOfWeek.Friday:
                     isForexOpen = !isFeriadoForex && (hor < 19);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 30) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 9);
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isInfiniteOk = (hor >= 0 && hor <= 8);
                     break;
                 case DayOfWeek.Saturday:
                     isForexOpen = false;
@@ -298,7 +298,7 @@ namespace Digital_Clock
             { // Mercados estao fechados, pode executar scripts python de manutencao se ja nao estiverem executando:
                 if (!isPythonOn)
                 {
-                    procPython = openPython(SCRIPT_INFINITE);
+                    procPython = openBatch(PYTHON_INFINITE);
                 }
             }
             else
@@ -350,16 +350,17 @@ namespace Digital_Clock
             return result;
         }
 
-        private static Process openPython(String script)
+        private static Process openBatch(String script)
         {
             Process proc = null;
             try
             {
-                var psi = new ProcessStartInfo();
-                psi.FileName = PYTHON_EXE;
-                psi.Arguments = $"\"{script}\"";
-                psi.UseShellExecute = false;
+                var psi = new ProcessStartInfo("cmd.exe", "/C " + Path.GetFileName(script));
+                // utilizar este codigo comentado para esconder a janela do batch executando...
+                //psi.UseShellExecute = false;
+                //psi.CreateNoWindow = true;
                 psi.CreateNoWindow = false;
+                psi.WorkingDirectory = Path.GetDirectoryName(script);
                 psi.WindowStyle = ProcessWindowStyle.Minimized;
 
                 proc = Process.Start(psi);
