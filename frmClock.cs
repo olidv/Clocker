@@ -118,9 +118,9 @@ namespace Digital_Clock
                                                                ( 2,11),  // Finados
                                                                (15,11),  // Proclamacao da Republica
                                                                //(20,11),  // Consciencia Negra (SP)
-                                                               //(24,12),  // Vespera de Natal: Encerra as 12h
-                                                               (25,12)  // Natal
-                                                               //(30,12) // Vespera de Ano Novo: Encerra as 12h
+                                                               (24,12),  // Vespera de Natal
+                                                               (25,12),  // Natal
+                                                               (31,12) // Vespera de Ano Novo
                                                               };
 
         public void checkScheduler()
@@ -218,37 +218,37 @@ namespace Digital_Clock
                 case DayOfWeek.Monday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
+                    isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Tuesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
+                    isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Wednesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
+                    isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Thursday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
+                    isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Friday:
                     isForexOpen = !isFeriadoForex && (hor < 19);
                     isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
-                    isInfiniteOk = (hor >= 0 && hor <= 7) || (hor == 8 && min < 40);
+                    isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Saturday:
                     isForexOpen = false;
                     isB3Open = false;
-                    isInfiniteOk = (hor >= 0 && hor <= 12);
+                    isInfiniteOk = (hor >= 4 && hor <= 8);
                     break;
                 case DayOfWeek.Sunday:
                     isForexOpen = !isFeriadoForex && (hor >= 18);
                     isB3Open = false;
-                    isInfiniteOk = (hor >= 0 && hor <= 12);
+                    isInfiniteOk = (hor >= 4 && hor <= 8);
                     break;
             }
             logger.Debug("Verificando calendario em checkScheduler() | isFeriadoForex={} | isForexOpen={} | isFeriadoB3={} | isB3Open={} | isInfiniteOk={}", isFeriadoForex, isForexOpen, isFeriadoB3, isB3Open, isInfiniteOk);
