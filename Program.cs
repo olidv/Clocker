@@ -21,14 +21,15 @@ namespace Digital_Clock
         static void Main()
         {
             logger.Info("Iniciando aplicacao Clock.exe...");
-
             // captura evento do sistema para identificar retorno (resume) da hibernacao/suspensao do computador:
             SystemEvents.PowerModeChanged += OnPowerModeChange;
 
             // aproveita para sincronizar o relogio do sistema na carga deste aplicativo:
+            logger.Trace("Sincronizando o relogio do sistema com horario local...");
             ResyncSystemTime();
 
             // Carga da aplicacao e apresentacao da tela inicial:
+            logger.Trace("Configuracao inicial para apresentacao da tela principal...");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -41,7 +42,7 @@ namespace Digital_Clock
             // efetua nova sincronizacao do relogio do sistema ao retornar da hibernacao/suspensao:
             if (e.Mode == PowerModes.Resume)
             {
-                logger.Trace("Reativando programa Clock apos suspensao...");
+                logger.Info("Reativando programa Clock apos suspensao...");
                 ResyncSystemTime();
             }
         }
@@ -50,10 +51,9 @@ namespace Digital_Clock
 
         private static void ResyncSystemTime()
         {
+            logger.Trace("Vai acertar a hora do computador com servidores do MS Windows...");
             try
             {
-                logger.Trace("Acertando a hora do computador...");
-
                 // configura a sincronizacao do relogio do computador para "time.windows.com":
                 ProcessStartInfo startInfoConfig = new ProcessStartInfo(W32TM);
                 startInfoConfig.WindowStyle = ProcessWindowStyle.Hidden;

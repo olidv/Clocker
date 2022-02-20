@@ -46,6 +46,7 @@ namespace Digital_Clock
             // posiciona demais campos alinhados a direita das horas:
             lblTime.Location = new Point(xTime, lblTime.Location.Y);
             lblSecond.Location = new Point(xSecond, lblSecond.Location.Y);
+            ckbOff.Location = new Point(lblTime.Location.X + 1, ckbOff.Location.Y);
             ckbClose.Location = new Point(lblTime.Location.X + lblTime.Width - 82, ckbClose.Location.Y);
         }
 
@@ -392,6 +393,32 @@ namespace Digital_Clock
             }
 
             return proc;
+        }
+
+        private void ckbOff_Click(object sender, EventArgs e)
+        {
+            logger.Trace("Acionado botao [Power Off] para desligar ou reiniciar o computador.");
+
+            DialogResult dialogResult = MessageBox.Show("Clique em [ANULAR] para desligar o computador ou [REPETIR] para reiniciar o Windows. Para fechar este diálogo clique em [IGNORAR].", 
+                                                        "ATENÇÃO:  Desligar  Computador", 
+                                                        MessageBoxButtons.AbortRetryIgnore,
+                                                        MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Abort)
+            {
+                // ANULAR eh desligar o computador:
+                logger.Info("Vai desligar o computador...");
+                Process.Start("shutdown", "/s /t 5");
+            }
+            else if (dialogResult == DialogResult.Retry)
+            {
+                // REPETIR eh reiniciar o computador:
+                logger.Info("Vai reiniciar o computador...");
+                Process.Start("shutdown", "/r /t 5");
+            }
+            else
+            {
+                // IGNORAR eh fechar este dialogo e prosseguir...
+            }
         }
     }
 }

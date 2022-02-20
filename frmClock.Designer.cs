@@ -64,6 +64,7 @@
             this.lblCity5 = new System.Windows.Forms.Label();
             this.ckbClose = new System.Windows.Forms.CheckBox();
             this.iglCheckClose = new System.Windows.Forms.ImageList(this.components);
+            this.ckbOff = new System.Windows.Forms.CheckBox();
             this.pnlCity1.SuspendLayout();
             this.pnlCity2.SuspendLayout();
             this.pnlCity3.SuspendLayout();
@@ -92,7 +93,7 @@
             // 
             this.lblDay.AutoSize = true;
             this.lblDay.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(112)))), ((int)(((byte)(241)))), ((int)(((byte)(164)))));
+            this.lblDay.ForeColor = System.Drawing.Color.Chartreuse;
             this.lblDay.Location = new System.Drawing.Point(869, 604);
             this.lblDay.Name = "lblDay";
             this.lblDay.Size = new System.Drawing.Size(462, 46);
@@ -104,7 +105,7 @@
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.lblDate.ForeColor = System.Drawing.Color.Yellow;
             this.lblDate.Location = new System.Drawing.Point(15, 604);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(731, 46);
@@ -436,7 +437,7 @@
             this.ckbClose.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.ckbClose.ImageIndex = 1;
             this.ckbClose.ImageList = this.iglCheckClose;
-            this.ckbClose.Location = new System.Drawing.Point(1083, 163);
+            this.ckbClose.Location = new System.Drawing.Point(1083, 162);
             this.ckbClose.Name = "ckbClose";
             this.ckbClose.Size = new System.Drawing.Size(80, 50);
             this.ckbClose.TabIndex = 10;
@@ -450,12 +451,28 @@
             this.iglCheckClose.Images.SetKeyName(0, "close-unchecked.png");
             this.iglCheckClose.Images.SetKeyName(1, "close-checked.png");
             // 
+            // ckbOff
+            // 
+            this.ckbOff.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckbOff.Checked = true;
+            this.ckbOff.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckbOff.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ckbOff.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ckbOff.Image = ((System.Drawing.Image)(resources.GetObject("ckbOff.Image")));
+            this.ckbOff.Location = new System.Drawing.Point(203, 162);
+            this.ckbOff.Name = "ckbOff";
+            this.ckbOff.Size = new System.Drawing.Size(80, 50);
+            this.ckbOff.TabIndex = 11;
+            this.ckbOff.UseVisualStyleBackColor = true;
+            this.ckbOff.Click += new System.EventHandler(this.ckbOff_Click);
+            // 
             // frmClock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1344, 681);
+            this.Controls.Add(this.ckbOff);
             this.Controls.Add(this.ckbClose);
             this.Controls.Add(this.pnlCity5);
             this.Controls.Add(this.pnlCity8);
@@ -537,6 +554,7 @@
         private System.Windows.Forms.Label lblCity5;
         private System.Windows.Forms.CheckBox ckbClose;
         private System.Windows.Forms.ImageList iglCheckClose;
+        private System.Windows.Forms.CheckBox ckbOff;
     }
 }
 
