@@ -118,9 +118,9 @@ namespace Digital_Clock
                                                                ( 2,11),  // Finados
                                                                (15,11),  // Proclamacao da Republica
                                                                //(20,11),  // Consciencia Negra (SP)
-                                                               (24,12),  // Vespera de Natal
+                                                               //(24,12),  // Vespera de Natal
                                                                (25,12),  // Natal
-                                                               (31,12) // Vespera de Ano Novo
+                                                               (30,12) // Vespera de Ano Novo
                                                               };
 
         public void checkScheduler()
