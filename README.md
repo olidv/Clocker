@@ -1,2 +1,3 @@
 # Digital-Clock
-Monitor de terminais para trading automatizado.
+
+Painel com relógio e monitor de terminais para trading automatizado.

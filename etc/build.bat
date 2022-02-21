@@ -35,6 +35,6 @@ python -m zipfile -c digital-clock-1.0.zip dist\.
 move digital-clock-1.0.zip dist\.  1>nul  2>&1
 echo.
 
-rem pausa final...
+rem Pausa final...
 echo.
 pause
