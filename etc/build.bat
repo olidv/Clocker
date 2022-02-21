@@ -1,4 +1,5 @@
 @echo off
+color E
 
 rem Printa a apresentacao do build.
 echo.
@@ -6,7 +7,6 @@ echo  BUILD DO DIGITAL-CLOCK   [ D:\WORKSPACE\C#\DIGITAL-CLOCK\ETC\BUILD.BAT ]
 echo.
 echo.
 
-call C:\Apps\Command\amarelo.bat
 echo  *************************************************
 echo  **  INICIANDO  COMPILACAO  DO  DIGITAL-CLOCK.  **
 echo  *************************************************
