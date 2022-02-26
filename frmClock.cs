@@ -383,7 +383,7 @@ namespace Digital_Clock
                 //psi.CreateNoWindow = true;
                 psi.CreateNoWindow = false;
                 psi.WorkingDirectory = path_batch;
-                psi.WindowStyle = ProcessWindowStyle.Minimized;
+                psi.WindowStyle = ProcessWindowStyle.Maximized;
 
                 proc = Process.Start(psi);
             }
