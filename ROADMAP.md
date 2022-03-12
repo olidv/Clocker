@@ -13,6 +13,13 @@ Colocar o dia da semana e mês (data extensa) em amarelo para maior destaque.
 Adicionar botão on-off (power) no lado esquerdo do visor horario.
     Exibir mensagem de dialogo pedindo confirmação para desligar o computador.
 
+Garantir que o botão vermelho impede o fechamento dos aplicativos.
+
+Não executar o python no domingo.
+
+** Não deixar o descanso de tela ser ativado. **
+    ** Modificado nas configuracoes do Windows
+
 
 --- OK --------------------------------------------------------------
 
