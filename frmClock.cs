@@ -218,27 +218,27 @@ namespace Digital_Clock
             {
                 case DayOfWeek.Monday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 10));
                     isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Tuesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 10));
                     isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Wednesday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 10));
                     isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Thursday:
                     isForexOpen = !isFeriadoForex; // && (hor < 21);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 10));
                     isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Friday:
                     isForexOpen = !isFeriadoForex && (hor < 19);
-                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 40));
+                    isB3Open = !isFeriadoB3 && ((hor == 8 && min >= 40) || (hor >= 9 && hor <= 17) || (hor == 18 && min <= 10));
                     isInfiniteOk = (hor >= 4 && hor <= 7) || (hor == 8 && min < 40);
                     break;
                 case DayOfWeek.Saturday:
