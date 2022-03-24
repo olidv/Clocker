@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,8 +15,14 @@ using NLog;
 
 namespace Digital_Clock
 {
+
     public partial class frmClock : Form
     {
+        [DllImport("User32")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_SHOWMINIMIZED = 2;
+
         // referencia ao logger do NLog para toda a classe...
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -375,8 +382,8 @@ namespace Digital_Clock
             {
                 String file_batch = Path.GetFileName(batch);
                 String path_batch = Path.GetDirectoryName(batch);
-                logger.Debug("Vai executar o batch {} no diretorio {}", 
-                             "cmd.exe" + " /C " + file_batch, path_batch);
+
+                logger.Debug("Vai executar o batch {} no diretorio {}...", batch, path_batch);
 
                 var psi = new ProcessStartInfo("cmd.exe", "/C " + file_batch);
                 // utilizar este codigo comentado para esconder a janela do batch executando...
@@ -384,9 +391,10 @@ namespace Digital_Clock
                 //psi.CreateNoWindow = true;
                 psi.CreateNoWindow = false;
                 psi.WorkingDirectory = path_batch;
-                psi.WindowStyle = ProcessWindowStyle.Maximized;
+                psi.WindowStyle = ProcessWindowStyle.Minimized;
 
                 proc = Process.Start(psi);
+                logger.Info("Programa batch {} executado com sucesso.", batch);
             }
             catch (Exception e)
             {
