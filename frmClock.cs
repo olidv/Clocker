@@ -408,7 +408,7 @@ namespace Digital_Clock
         {
             logger.Trace("Acionado botao [Power Off] para desligar ou reiniciar o computador.");
 
-            DialogResult dialogResult = MessageBox.Show("Clique em [ANULAR] para desligar o computador ou [REPETIR] para reiniciar o Windows. Para fechar este diálogo clique em [IGNORAR].", 
+            DialogResult dialogResult = MessageBox.Show("Clique em [ABORT] para desligar o computador ou [RETRY] para reiniciar o Windows. Para fechar este diálogo clique em [IGNORE].", 
                                                         "ATENÇÃO:  Desligar  Computador", 
                                                         MessageBoxButtons.AbortRetryIgnore,
                                                         MessageBoxIcon.Warning);
