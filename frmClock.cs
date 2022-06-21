@@ -103,8 +103,8 @@ namespace Digital_Clock
 
         /*** COTACOES DO FOREX INTERROMPIDAS PARA MEDIR CHECK DA PERFORMANCE DAS COTACOES DE MINI CONTRATOS ***/
         static readonly String MT5_XM = @"C:\Apps\B3\XM Global MT5\terminal64.exe";
-        static readonly String MT5_GENIAL = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
         static readonly String MT5_MODAL = @"C:\Apps\B3\ModalMais MetaTrader 5\terminal64.exe";
+        static readonly String MT5_GENIAL = @"C:\Apps\B3\MetaTrader 5\terminal64.exe";
         // TODO static readonly String TRYD_MODAL = @"C:\Apps\B3\Tryd6\trader.exe";
         static readonly String PYTHON_INFINITE = @"C:\Apps\B3\InFiniTe\bin\startup.bat";
 
@@ -133,40 +133,44 @@ namespace Digital_Clock
 
         public void checkScheduler()
         {
-            bool isMT5GenialOn = false;
-            Process procMT5Genial = null;
+            bool isMT5XmOn = false;
+            Process procMT5Xm = null;
 
             bool isMT5ModalOn = false;
             Process procMT5Modal = null;
 
+            bool isMT5GenialOn = false;
+            Process procMT5Genial = null;
+
             //bool isTrydModalOn = false;
             //Process procTrydModal = null;
-
-            bool isMT5XmOn = false;
-            Process procMT5Xm = null;
 
             bool isPythonOn = false;
             Process procPython = null;
 
             // busca o estado das instancias do MetaTrader (corretoras) em execucao:
             Process[] processes = Process.GetProcessesByName("terminal64");
+            logger.Debug("Verificando processos em checkScheduler() | processes = Process[{}]", processes.Length);
             foreach (Process proc in processes)
             {
-                String title = proc.MainWindowTitle.ToUpper();
-                if (title.Contains("GENIAL"))
+                // Alterado para verificar pelo full-path pois o titulo as vezes vem em branco ""...
+                string fullPath = proc.MainModule.FileName;
+                logger.Debug("Path do Processo em execucao: {}", fullPath);
+
+                if (fullPath.Contains("XM Global"))
                 {
-                    procMT5Genial = proc;
-                    isMT5GenialOn = true;
+                    procMT5Xm = proc;
+                    isMT5XmOn = true;
                 }
-                if (title.Contains("MODALMAIS"))
+                else if (fullPath.Contains("ModalMais"))
                 {
                     procMT5Modal = proc;
                     isMT5ModalOn = true;
                 }
-                if (title.Contains("XM"))
+                else  // GENIAL
                 {
-                    procMT5Xm = proc;
-                    isMT5XmOn = true;
+                    procMT5Genial = proc;
+                    isMT5GenialOn = true;
                 }
             }
 
