@@ -260,8 +260,8 @@ namespace Digital_Clock
                 case DayOfWeek.Sunday:
                     isForexOpen = !isFeriadoForex && (hor >= 18);
                     isB3Open = false;
-                    // ja processou o Infinite no sabado, no domingo nao precisa entao.
-                    isInfiniteOk = false;
+                    // eh necessario executar para ao menos baixar os sorteios do sabado
+                    isInfiniteOk = (hor >= 4 && hor <= 8);
                     break;
             }
             logger.Debug("Verificando calendario em checkScheduler() | isFeriadoForex={} | isForexOpen={} | isFeriadoB3={} | isB3Open={} | isInfiniteOk={}", isFeriadoForex, isForexOpen, isFeriadoB3, isB3Open, isInfiniteOk);
