@@ -22,7 +22,7 @@ rmdir /s /q dist  1>nul  2>&1
 echo.
 
 echo Criando nova estrutura para distribuir o pacote do executavel
-mkdir dist  1>nul  2>&1
+mkdir dist       1>nul  2>&1
 mkdir dist\logs  1>nul  2>&1
 echo.
 
