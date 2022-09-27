@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associadas a um assembly.
-[assembly: AssemblyTitle("Digital-Clock")]
+[assembly: AssemblyTitle("Clocker")]
 [assembly: AssemblyDescription("Monitor de terminais para trading automatizado.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ALARA Informática, Ltda.")]
-[assembly: AssemblyProduct("Digital-Clock")]
-[assembly: AssemblyCopyright("Copyright ©  2020 ALARA Informática, Ltda.")]
+[assembly: AssemblyProduct("Clocker")]
+[assembly: AssemblyCopyright("Copyright ©  2020-2022 ALARA Informática, Ltda.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

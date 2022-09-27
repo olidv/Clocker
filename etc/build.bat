@@ -3,13 +3,13 @@ color E
 
 rem Printa a apresentacao do build.
 echo.
-echo  BUILD DO DIGITAL-CLOCK   [ D:\WORKSPACE\C#\DIGITAL-CLOCK\ETC\BUILD.BAT ]
+echo  BUILD DO CLOCKER   [ D:\WORKSPACE\C#\CLOCKER\ETC\BUILD.BAT ]
 echo.
 echo.
 
-echo  *************************************************
-echo  **  INICIANDO  COMPILACAO  DO  DIGITAL-CLOCK.  **
-echo  *************************************************
+echo  *******************************************
+echo  **  INICIANDO  COMPILACAO  DO  CLOCKER.  **
+echo  *******************************************
 echo.
 echo.
 
@@ -31,8 +31,8 @@ copy bin\Release\*.* dist\
 echo.
 
 echo Compactando o build e gerando pacote de distribuicao da release [ ZIP ]
-python -m zipfile -c digital-clock-1.0.zip dist\.
-move digital-clock-1.0.zip dist\.  1>nul  2>&1
+python -m zipfile -c clocker-1.0.zip dist\.
+move clocker-1.0.zip dist\.  1>nul  2>&1
 echo.
 
 rem Pausa final...

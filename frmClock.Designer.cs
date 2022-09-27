@@ -1,6 +1,6 @@
-﻿namespace Digital_Clock
+﻿namespace Clocker
 {
-    partial class frmClock
+    partial class FrmClock
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClock));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmClock));
             this.lblTime = new System.Windows.Forms.Label();
             this.lblDay = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
@@ -62,8 +62,6 @@
             this.pnlCity5 = new System.Windows.Forms.Panel();
             this.lblTime5 = new System.Windows.Forms.Label();
             this.lblCity5 = new System.Windows.Forms.Label();
-            this.ckbClose = new System.Windows.Forms.CheckBox();
-            this.iglCheckClose = new System.Windows.Forms.ImageList(this.components);
             this.ckbOff = new System.Windows.Forms.CheckBox();
             this.pnlCity1.SuspendLayout();
             this.pnlCity2.SuspendLayout();
@@ -428,29 +426,6 @@
             this.lblCity5.Text = "Dubai, AE";
             this.lblCity5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // ckbClose
-            // 
-            this.ckbClose.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ckbClose.Checked = true;
-            this.ckbClose.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckbClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ckbClose.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ckbClose.ImageIndex = 1;
-            this.ckbClose.ImageList = this.iglCheckClose;
-            this.ckbClose.Location = new System.Drawing.Point(1083, 162);
-            this.ckbClose.Name = "ckbClose";
-            this.ckbClose.Size = new System.Drawing.Size(80, 50);
-            this.ckbClose.TabIndex = 10;
-            this.ckbClose.UseVisualStyleBackColor = true;
-            this.ckbClose.CheckedChanged += new System.EventHandler(this.ckbClose_CheckedChanged);
-            // 
-            // iglCheckClose
-            // 
-            this.iglCheckClose.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iglCheckClose.ImageStream")));
-            this.iglCheckClose.TransparentColor = System.Drawing.Color.Transparent;
-            this.iglCheckClose.Images.SetKeyName(0, "close-unchecked.png");
-            this.iglCheckClose.Images.SetKeyName(1, "close-checked.png");
-            // 
             // ckbOff
             // 
             this.ckbOff.Appearance = System.Windows.Forms.Appearance.Button;
@@ -458,22 +433,21 @@
             this.ckbOff.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckbOff.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ckbOff.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.ckbOff.Image = ((System.Drawing.Image)(resources.GetObject("ckbOff.Image")));
-            this.ckbOff.Location = new System.Drawing.Point(203, 162);
+            this.ckbOff.Image = global::Clocker.Properties.Resources.png_power;
+            this.ckbOff.Location = new System.Drawing.Point(1083, 162);
             this.ckbOff.Name = "ckbOff";
             this.ckbOff.Size = new System.Drawing.Size(80, 50);
             this.ckbOff.TabIndex = 11;
             this.ckbOff.UseVisualStyleBackColor = true;
             this.ckbOff.Click += new System.EventHandler(this.ckbOff_Click);
             // 
-            // frmClock
+            // FrmClock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1344, 681);
             this.Controls.Add(this.ckbOff);
-            this.Controls.Add(this.ckbClose);
             this.Controls.Add(this.pnlCity5);
             this.Controls.Add(this.pnlCity8);
             this.Controls.Add(this.pnlCity7);
@@ -489,7 +463,7 @@
             this.Controls.Add(this.lblTime);
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmClock";
+            this.Name = "FrmClock";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Relógio";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -552,8 +526,6 @@
         private System.Windows.Forms.Panel pnlCity5;
         private System.Windows.Forms.Label lblTime5;
         private System.Windows.Forms.Label lblCity5;
-        private System.Windows.Forms.CheckBox ckbClose;
-        private System.Windows.Forms.ImageList iglCheckClose;
         private System.Windows.Forms.CheckBox ckbOff;
     }
 }

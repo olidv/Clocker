@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{222402A1-E7E1-4E42-A5B3-700BA4825624}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Digital_Clock</RootNamespace>
+    <RootNamespace>Clocker</RootNamespace>
     <AssemblyName>Clock</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -48,13 +48,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Clock.ico</ApplicationIcon>
+    <ApplicationIcon>Clocker.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Digital_Clock.Program</StartupObject>
+    <StartupObject>Clocker.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -97,6 +95,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -119,12 +118,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Clock.ico" />
+    <Content Include="Clocker.ico" />
+    <None Include="Resources\power.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 e x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

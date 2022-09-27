@@ -1,8 +1,8 @@
 
 ** Dia 01/Janeiro/2022: revisar feriados B3 no Clock (C#).
 
-Incluir batch de build para o Digital-Clock (\etc\*.bat).
-Incluir zip do diretorio \dist\*.* no Digital-Clock.
+Incluir batch de build para o Clocker (\etc\*.bat).
+Incluir zip do diretorio \dist\*.* no Clocker.
     <app>.zip
     
 Verificar se está gerando logging da atualização da hora (se está mesmo alterando).
