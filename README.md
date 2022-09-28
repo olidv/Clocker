@@ -1,3 +1,5 @@
 # Clocker
 
-Painel com relógio e monitor de terminais para trading automatizado.
+Painel com relógios local e internacionais para trading automatizado.
+
+Parte integrante do InFiniTe = INtelligent FINancIal TEchnology.
