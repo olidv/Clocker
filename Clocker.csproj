@@ -7,7 +7,7 @@
     <ProjectGuid>{222402A1-E7E1-4E42-A5B3-700BA4825624}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Clocker</RootNamespace>
-    <AssemblyName>Clock</AssemblyName>
+    <AssemblyName>Clocker</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

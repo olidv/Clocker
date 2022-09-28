@@ -14,7 +14,8 @@ echo.
 echo.
 
 echo Posicionando no diretorio raiz da aplicacao
-cd /d C:\Apps\B3\Clocker
+mkdir C:\Apps\Infinite\Clocker  1>nul  2>&1
+cd /d C:\Apps\Infinite\Clocker
 echo.
 
 echo Limpando as pastas temporarias da aplicacao
@@ -26,7 +27,7 @@ cd /d D:\Workspace\C#\Clocker
 echo.
 
 echo Copiando os arquivos do projeto
-xcopy dist\*.* C:\Apps\B3\Clocker  /E /C /Q /H /R /Y
+xcopy dist\*.* C:\Apps\Infinite\Clocker  /E /C /Q /H /R /Y
 echo.
 
 rem Pausa final...
