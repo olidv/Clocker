@@ -23,11 +23,14 @@ echo.
 
 echo Criando nova estrutura para distribuir o pacote do executavel
 mkdir dist       1>nul  2>&1
+mkdir dist\bin   1>nul  2>&1
 mkdir dist\logs  1>nul  2>&1
 echo.
 
 echo Copiando para distribuicao os arquivos de resources e executavel
-copy bin\Release\*.* dist\
+copy bin\Release\*.*         dist\bin\
+copy src\resources\*.ico     dist\bin\
+copy src\resources\prod\*.*  dist\bin\
 echo.
 
 echo Compactando o build e gerando pacote de distribuicao da release [ ZIP ]
