@@ -222,6 +222,16 @@ project.lock.json
 *.feature.xlsx.*
 *.Specs_*.html
 
+# Visual Studio Code
+.vscode/
+.history/
+prettierignore.txt
+*.code-workspace
+
+# ---------------------------------------------------------
+
 #####
-# End of core ignore list, below put you custom 'per project' settings (patterns or path)
+# End of core ignore list, 
+# below put you custom 'per project' settings,
+# patterns or path.
 #####
