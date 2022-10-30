@@ -3,7 +3,7 @@ color E
 
 rem Printa a apresentacao do build.
 echo.
-echo  BUILD DO CLOCKER   [ D:\WORKSPACE\C#\CLOCKER\ETC\BUILD.BAT ]
+echo  BUILD DO CLOCKER   [ D:\WORKSPACE\INFINITE\CLOCKER\ETC\BUILD.BAT ]
 echo.
 echo.
 

@@ -3,7 +3,7 @@ color E
 
 rem Printa a apresentacao do deploy:
 echo.
-echo  DEPLOY DO CLOCKER   [ D:\WORKSPACE\C#\CLOCKER\ETC\DEPLOY.BAT ]
+echo  DEPLOY DO CLOCKER   [ D:\WORKSPACE\INFINITE\CLOCKER\ETC\DEPLOY.BAT ]
 echo.
 echo.
 
@@ -23,7 +23,7 @@ rem del /f /q logs\*.*  1>nul  2>&1
 echo.
 
 echo Posicionando no diretorio do projeto
-cd /d D:\Workspace\C#\Clocker
+cd /d D:\Workspace\Infinite\Clocker
 echo.
 
 echo Copiando os arquivos do projeto
