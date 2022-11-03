@@ -467,7 +467,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Relógio";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.frmClock_Load);
             this.Resize += new System.EventHandler(this.frmClock_Resize);
             this.pnlCity1.ResumeLayout(false);
             this.pnlCity1.PerformLayout();

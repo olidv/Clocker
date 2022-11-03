@@ -24,17 +24,11 @@ namespace Clocker
         {
             InitializeComponent();
 
-            // inicia o timer, disparado a cada 1 segundo.
-            timer.Start();
-        }
-
-        private void frmClock_Load(object sender, EventArgs e)
-        {
-            // posiciona o dia/semana alinhado (25px) a lateral direita.
-            lblDay.Location = new Point(this.Width - lblDay.Width - 25, lblDay.Location.Y);
-
             // antes da carga e exibicao da tela, ja ajusta os campos do relogio e atualiza a hora:
             updatePanelClock();
+
+            // inicia o timer, disparado a cada 1 segundo.
+            timer.Start();
         }
 
         private void frmClock_Resize(object sender, EventArgs e)
@@ -48,6 +42,9 @@ namespace Clocker
             lblTime.Location = new Point(xTime, lblTime.Location.Y);
             lblSecond.Location = new Point(xSecond, lblSecond.Location.Y);
             ckbOff.Location = new Point(lblTime.Location.X + lblTime.Width - 82, ckbOff.Location.Y);
+
+            // posiciona o dia/semana alinhado (25px) a lateral direita.
+            lblDay.Location = new Point(this.Width - lblDay.Width - 25, lblDay.Location.Y);
         }
 
         private void timer_Tick(object sender, EventArgs e)
